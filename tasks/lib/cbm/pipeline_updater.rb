@@ -34,7 +34,8 @@ module Cbm
       process(
         "#{fly_path} --target=concourse login --concourse-url=#{url} #{team_argument} #{insecure_argument}",
         timeout: 5,
-        input: [username, password])
+        input: username,
+        input: password)
 
       log 'Updating pipeline...'
       process(generate_set_pipeline_cmd, timeout: 5, input: %w(y))
