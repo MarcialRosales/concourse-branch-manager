@@ -30,7 +30,7 @@ module Cbm
 
       log 'Logging into concourse...'
       team_argument = team != nil && team != "" ? "--team-name=#{team}" : ''
-      insecure_argument = insecure != nill && insecure == "true" ? "--insecure" : ''
+      insecure_argument = insecure != nill ? "--insecure" : ''
       process(
         "#{fly_path} --target=concourse login --concourse-url=#{url} #{team_argument} #{insecure_argument}",
         timeout: 5,
@@ -63,7 +63,7 @@ module Cbm
       stream = open(
         fly_download_url,
         read_binary_open_mode,
-        http_basic_authentication: [username, password])
+        {http_basic_authentication: [username, password], ssl_verify_mode: 0})
       IO.copy_stream(stream, fly_path)
       process("chmod +x #{fly_path}")
     end
