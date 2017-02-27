@@ -38,7 +38,7 @@ module Cbm
         timeout: 5)
 
       log 'Updating pipeline...'
-      process(generate_set_pipeline_cmd, timeout: 5, input_lines: %w(y))
+      process(generate_set_pipeline_cmd, timeout: 5)
 
       log 'Unpausing pipeline...'
       unpause_pipeline_cmd = "#{fly_path} --target=concourse unpause-pipeline " \
@@ -53,7 +53,7 @@ module Cbm
         "#{options}--load-vars-from=#{entry} "
       end.strip
       "#{fly_path} --target=concourse set-pipeline --config=#{pipeline_file} " \
-        "--pipeline=#{pipeline_name} #{load_vars_from_options}"
+        "--pipeline=#{pipeline_name} #{load_vars_from_options} -n"
     end
 
     def download_fly
