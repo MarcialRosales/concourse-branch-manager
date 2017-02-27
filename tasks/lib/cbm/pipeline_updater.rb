@@ -34,10 +34,10 @@ module Cbm
       process(
         "#{fly_path} --target=concourse login --concourse-url=#{url} #{team_argument} #{insecure_argument}",
         timeout: 5,
-        input_lines: [username, password])
+        input: [username, password])
 
       log 'Updating pipeline...'
-      process(generate_set_pipeline_cmd, timeout: 5, input_lines: %w(y))
+      process(generate_set_pipeline_cmd, timeout: 5, input: %w(y))
 
       log 'Unpausing pipeline...'
       unpause_pipeline_cmd = "#{fly_path} --target=concourse unpause-pipeline " \
