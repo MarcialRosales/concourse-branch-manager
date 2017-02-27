@@ -31,11 +31,11 @@ module Cbm
       log 'Logging into concourse...'
       team_argument = team != nil && team != "" ? "--team-name=#{team}" : ''
       insecure_argument = insecure != nil ? "--insecure" : ''
+
       process(
-        "#{fly_path} --target=concourse login --concourse-url=#{url} #{team_argument} #{insecure_argument}",
-        timeout: 5,
-        input: username,
-        input: password)
+        "#{fly_path} --target=concourse login --concourse-url=#{url} #{team_argument} #{insecure_argument}" \
+        " --username=#{username} --password=#{password}",
+        timeout: 5)
 
       log 'Updating pipeline...'
       process(generate_set_pipeline_cmd, timeout: 5, input: %w(y))
