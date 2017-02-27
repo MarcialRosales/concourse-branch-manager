@@ -38,7 +38,7 @@ module Cbm
         timeout: 5)
 
       log 'Updating pipeline...'
-      process(generate_set_pipeline_cmd, timeout: 5, input: %w(y))
+      process(generate_set_pipeline_cmd, timeout: 5, input_lines: %w(y))
 
       log 'Unpausing pipeline...'
       unpause_pipeline_cmd = "#{fly_path} --target=concourse unpause-pipeline " \
