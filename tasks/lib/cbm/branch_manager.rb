@@ -7,13 +7,14 @@ require 'json'
 module Cbm
   # Main class and entry point
   class BranchManager
-    attr_reader :build_root, :url, :username, :password, :username, :team, :resource_template_file
+    attr_reader :build_root, :url, :insecure, :username, :password, :username, :team, :resource_template_file
     attr_reader :job_template_file, :load_vars_from_entries, :pipeline_name
     attr_reader :common_resources_template, :group_per_branch, :resource_type_template_file
 
     def initialize
       @build_root = ENV.fetch('BUILD_ROOT')
       @url = ENV.fetch('CONCOURSE_URL')
+      @insecure = ENV.fetch('CONCOURSE_INSECURE')
       @username = ENV.fetch('CONCOURSE_USERNAME')
       @password = ENV.fetch('CONCOURSE_PASSWORD')
       @team = ENV.fetch('CONCOURSE_TEAM', nil)
@@ -41,6 +42,7 @@ module Cbm
         group_per_branch).generate
       Cbm::PipelineUpdater.new(
         url,
+        insecure,
         username,
         password,
         team,

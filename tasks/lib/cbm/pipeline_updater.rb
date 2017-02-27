@@ -8,13 +8,14 @@ module Cbm
     include Logger
     include ProcessHelper
 
-    attr_reader :url, :username, :password, :team, :pipeline_file, :fly_path
+    attr_reader :url, :insecure, :username, :password, :team, :pipeline_file, :fly_path
     attr_reader :load_vars_from_entries, :pipeline_name
 
     # TODO: do http://www.refactoring.com/catalog/introduceParameterObject.html
     # rubocop:disable Metrics/ParameterLists
-    def initialize(url, username, password, team, pipeline_file, load_vars_from_entries, pipeline_name)
+    def initialize(url, insecure, username, password, team, pipeline_file, load_vars_from_entries, pipeline_name)
       @url = url
+      @insecure = insecure
       @username = username
       @password = password
       @team = team
@@ -29,8 +30,9 @@ module Cbm
 
       log 'Logging into concourse...'
       team_argument = team != nil && team != "" ? "--team-name=#{team}" : ''
+      insecure_argument = insecure != nill && insecure == "true" ? "--insecure" : ''
       process(
-        "#{fly_path} --target=concourse login --concourse-url=#{url} #{team_argument}",
+        "#{fly_path} --target=concourse login --concourse-url=#{url} #{team_argument}" "#{insecure_argument}",
         timeout: 5,
         input_lines: [username, password])
 
