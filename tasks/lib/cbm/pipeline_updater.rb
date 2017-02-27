@@ -30,7 +30,7 @@ module Cbm
 
       log 'Logging into concourse...'
       team_argument = team != nil && team != "" ? "--team-name=#{team}" : ''
-      insecure_argument = insecure != nill ? "--insecure" : ''
+      insecure_argument = insecure != nil ? "--insecure" : ''
       process(
         "#{fly_path} --target=concourse login --concourse-url=#{url} #{team_argument} #{insecure_argument}",
         timeout: 5,
