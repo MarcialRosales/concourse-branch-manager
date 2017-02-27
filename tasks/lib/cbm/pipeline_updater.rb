@@ -32,7 +32,7 @@ module Cbm
       team_argument = team != nil && team != "" ? "--team-name=#{team}" : ''
       insecure_argument = insecure != nill && insecure == "true" ? "--insecure" : ''
       process(
-        "#{fly_path} --target=concourse login --concourse-url=#{url} #{team_argument}" "#{insecure_argument}",
+        "#{fly_path} --target=concourse login --concourse-url=#{url} #{team_argument} #{insecure_argument}",
         timeout: 5,
         input_lines: [username, password])
 
